@@ -17,6 +17,7 @@ public:
 	void setroot(Node<T>* nroot);
 	//Modificadores del árbol.
 	bool insertnode(T& father, T& node);
+	bool insertdata(T data);
 	bool deletenode(T& node);
 	//Búsqueda.
 	Node<T>* findnode(T val);
@@ -24,11 +25,13 @@ public:
 	int height();
 	unsigned int size(); 
 	int level();
+
+	void balance();
 	//Recorridos.
 	void preorder();
 	void posorder();
 	void inorder();
-	//Balanceos
+	//Rotations
 	Node<T>* rotr(Node<T>* x);
 	Node<T>* rotl(Node<T>* x);
 	Node<T>* rotrl(Node<T>* x);

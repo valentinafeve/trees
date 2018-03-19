@@ -1,5 +1,6 @@
 #include <queue>
 #include <iostream>
+#include <math.h>
 
 template< class T >
 Node<T>::Node(){
@@ -24,7 +25,7 @@ T Node<T>::getdata(){
 }
 
 template< class T >
-void Node<T>::setdata(T& val){
+void Node<T>::setdata(T val){
 	Node<T>::data= val;
 }
 
@@ -51,6 +52,25 @@ void Node<T>::setright(Node<T>* nright){
 template< class T >
 int Node<T>::height(){
 	int n=0;
+	int lh=0;
+	int rh=0;
+	if(this->getleft() != NULL){
+		lh=1+this->getleft()->height();
+	}
+	else{
+		if(this->getright() != NULL){
+			lh=1+this->getright()->height();
+		}
+		else{
+			return 1;
+		}
+	}
+	if(lh>rh){
+		n=lh;
+	}
+	else{
+		n=rh;
+	}
 	return n;
 }	
 
@@ -61,19 +81,56 @@ unsigned int Node<T>::size(){
 }
 
 template< class T >
-void Node<T>::preorder(){
-	if(Node<T>::left != NULL){
-		printf("%d\n",this->data);
-		Node<T>::left->preorder();
-		Node<T>::right->preorder();
-	}
-	else{
-		if(Node<T>::right != NULL ){
-			Node<T>::right->preorder();
+bool Node<T>::insertdata(T ndata){
+	if( ndata < this->getdata() ){
+		if(this->getleft() == NULL ){
+			Node<T>* nnode = new Node<T>(ndata);
+			this->setleft(nnode);
 		}
 		else{
-			printf("%d\n",this->data);
+			this->getleft()->insertdata(ndata);
 		}
+	}
+	if( ndata > this->getdata() ){
+		if(this->getright() == NULL ){
+			Node<T>* nnode = new Node<T>(ndata);
+			this->setright(nnode);
+		}
+		else{
+			this->getright()->insertdata(ndata);
+		}
+	}
+	if( ndata == this->getdata() ){
+		return 0;
+	}
+	return 1;
+}
+
+template< class T >
+bool Node<T>::isbalanced(){
+	int lh=0;
+	int rh=0;
+	int n=0;
+	if(this->getright() != NULL){
+		rh=this->getright()->height();
+	}
+	if(this->getleft() != NULL){
+		lh=this->getleft()->height();
+	}
+	if(abs(lh-rh) >1 ){
+		return 0;
+	}
+	return 1;
+}
+
+template< class T >
+void Node<T>::preorder(){
+	printf("%d\n",this->data);
+	if(Node<T>::left != NULL){
+		Node<T>::left->preorder();
+	}
+	if(Node<T>::right != NULL ){
+		Node<T>::right->preorder();
 	}
 }
 
@@ -81,32 +138,20 @@ template< class T >
 void Node<T>::posorder(){
 	if(Node<T>::left != NULL){
 		Node<T>::left->posorder();
+	}
+	if(Node<T>::right != NULL ){
 		Node<T>::right->posorder();
-		printf("%d\n",this->data);
 	}
-	else{
-		if(Node<T>::right != NULL ){
-			Node<T>::right->posorder();
-		}
-		else{
-			printf("%d\n",this->data);
-		}
-	}
+	printf("%d\n",this->data);
 }
 
 template< class T >
 void Node<T>::inorder(){
 	if(Node<T>::left != NULL){
 		Node<T>::left->inorder();
-		printf("%d\n",this->data);
-		Node<T>::right->inorder();
 	}
-	else{
-		if(Node<T>::right != NULL ){
-			Node<T>::right->inorder();
-		}
-		else{
-			printf("%d\n",this->data);
-		}
+	printf("%d\n",this->data);
+	if(Node<T>::right != NULL ){
+		Node<T>::right->inorder();
 	}
 }

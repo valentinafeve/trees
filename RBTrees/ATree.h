@@ -1,36 +1,42 @@
-#ifndef __TREE__H__
-#define __TREE__H__
+#ifndef __ATREE__H__
+#define __ATREE__H__
 
 #include "Node.h"
 
-template <class T>
-class Tree{
+template < class T >
+class ATree{
 protected:
 	Node<T>* root;
 public:
-	typedef std::list< Node<T>* > TList;
-
-public:
-	Tree();
-	Tree(const T& val);
-	~Tree();
+	ATree();
+	ATree(const T& val);
+	~ATree();
 	bool isempty();
 	//Getters, Setters de la raíz.
 	Node<T>* getroot();
 	void setroot(Node<T>* nroot);
 	//Modificadores del árbol.
 	bool insertnode(T& father, T& node);
+	bool insertdata(T data);
 	bool deletenode(T& node);
+	//Búsqueda.
 	Node<T>* findnode(T val);
+	//Información del árbol.
 	int height();
 	unsigned int size(); 
+	int level();
+	//Recorridos.
 	void preorder();
 	void posorder();
 	void inorder();
-	int level();
-
+	//Rotations
+	Node<T>* rotr(Node<T>* x);
+	Node<T>* rotl(Node<T>* x);
+	Node<T>* rotrl(Node<T>* x);
+	Node<T>* rotlr(Node<T>* x);
+	
 };
 
-#include "Tree.hxx"
+#include "ATree.hxx"
 
 #endif

@@ -1,23 +1,23 @@
-#ifndef __TREE__H__
-#define __TREE__H__
+#ifndef __ATREE__H__
+#define __ATREE__H__
 
 #include "Node.h"
 
 template < class T >
-class BTree{
+class ATree{
 protected:
 	Node<T>* root;
-
 public:
-	Tree();
-	Tree(const T& val);
-	~Tree();
+	ATree();
+	ATree(const T& val);
+	~ATree();
 	bool isempty();
 	//Getters, Setters de la raíz.
 	Node<T>* getroot();
 	void setroot(Node<T>* nroot);
 	//Modificadores del árbol.
 	bool insertnode(T& father, T& node);
+	bool insertdata(T data);
 	bool deletenode(T& node);
 	//Búsqueda.
 	Node<T>* findnode(T val);
@@ -29,11 +29,14 @@ public:
 	void preorder();
 	void posorder();
 	void inorder();
-	//Balanceos
-	void rotr(T& node);
-	void rotl(T& node);
-	void rotrl(T& node);
-	void rotlr(T& node);
-
+	//Rotations
+	Node<T>* rotr(Node<T>* x);
+	Node<T>* rotl(Node<T>* x);
+	Node<T>* rotrl(Node<T>* x);
+	Node<T>* rotlr(Node<T>* x);
 	
 };
+
+#include "ATree.hxx"
+
+#endif
