@@ -1,25 +1,25 @@
-#include "ATree.h"
+#include "RBTree.h"
 #include <iostream>
 
 template < class T >
-ATree<T>::ATree() : root(NULL){
+RBTree<T>::RBTree() : root(NULL){
 
 }
 
 template < class T >
-ATree<T>::ATree(const T& val){
+RBTree<T>::RBTree(const T& val){
 	Node<T>* nnode = new Node<T>(val);
 	this->root = nnode;
 }
 
 template < class T >
-ATree<T>::~ATree(){
+RBTree<T>::~RBTree(){
 	if(this->root != NULL)
 		delete this->root;
 }
 
 template < class T >
-bool ATree<T>::isempty(){
+bool RBTree<T>::isempty(){
 	if (this->root == NULL)
 		return true;
 	else
@@ -30,7 +30,7 @@ bool ATree<T>::isempty(){
 
 //Getters, Setters de la raíz.
 template < class T >
-Node<T>* ATree<T>::getroot(){
+Node<T>* RBTree<T>::getroot(){
 	return this->root;
 }
 

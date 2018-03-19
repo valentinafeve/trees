@@ -35,6 +35,7 @@ protected:
 	T data;
 	Node<T>* left;
 	Node<T>* right;
+	char rb;
 };
 
 #include "Node.hxx"

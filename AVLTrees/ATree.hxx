@@ -3,7 +3,6 @@
 
 template < class T >
 ATree<T>::ATree() : root(NULL){
-
 }
 
 template < class T >
