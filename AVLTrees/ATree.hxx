@@ -151,12 +151,15 @@ void ATree<T>::balance(){
 		}
 	}
 
+	if(father==NULL){
+		ATree<T>::root=problem;
+	}
 
 }
 
 template < class T >
-bool ATree<T>::deletenode(T& node){
-	bool wasdeleted=0;
+bool ATree<T>::deletenode(T* node){
+	node=NULL;
 	return wasdeleted;
 }
 
@@ -164,6 +167,7 @@ bool ATree<T>::deletenode(T& node){
 template < class T >
 Node<T>* ATree<T>::findnode(T val){
 	Node<T>* founded=NULL;
+	founded = this->root->findson(val);
 	return founded;
 }
 

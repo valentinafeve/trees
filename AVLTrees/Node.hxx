@@ -81,6 +81,36 @@ unsigned int Node<T>::size(){
 }
 
 template< class T >
+Node<T>* Node<T>::findson(T data){
+	Node<T>* p=NULL;
+	p=this->getright();
+	if(p!= NULL){
+		if(p->getdata()==data){
+			return p;
+		}
+		else{
+			p=this->getright()->findson(data);
+			if(p!=NULL){
+				return p;
+			}
+		}	
+	}
+	p=this->getleft();
+	if(p!= NULL){
+		if(p->getdata()==data){
+			return p;
+		}
+		else{
+			p=this->getleft()->findson(data);
+			if(p!=NULL){
+				return p;
+			}
+		}	
+	}
+	return p;
+}
+
+template< class T >
 bool Node<T>::insertdata(T ndata){
 	if( ndata < this->getdata() ){
 		if(this->getleft() == NULL ){

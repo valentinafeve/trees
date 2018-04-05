@@ -24,6 +24,7 @@ public:
 	//Subtree's size.
 	unsigned int size();
 
+	Node<T>* findson(T data);
 	bool isbalanced();
 	//Insertions
 	bool insertdata(T ndata);
