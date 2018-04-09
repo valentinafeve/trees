@@ -29,6 +29,8 @@ public:
 	//Insertions
 	bool insertdata(T ndata);
 
+	//void listinorder(list<T> datas);
+
 	//Routes
 	void preorder();
 	void posorder();

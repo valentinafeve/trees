@@ -1,5 +1,6 @@
 #include "ATree.h"
 #include <iostream>
+#include <list>
 
 template < class T >
 ATree<T>::ATree() : root(NULL){
@@ -48,7 +49,6 @@ bool ATree<T>::insertnode(T& father, T& node){
 template < class T >
 bool ATree<T>::insertdata(T ndata){
 	bool wasinserted=0;
-
 	wasinserted= this->root->insertdata(ndata);
 	this->balance();
 	return wasinserted;
@@ -61,7 +61,19 @@ void ATree<T>::balance(){
 	Node<T>* father = NULL;
 	bool t=1;
 	int n=0;
-	while(t){
+
+
+	int a=0;
+	int b=0;
+	if(problem->getright() != NULL){
+		a=problem->getright()->height();
+	}
+	if(problem->getleft() != NULL){
+		b=problem->getleft()->height();
+	}
+	if(a-b<=-2 || a-b>=2){
+		printf("Balancing...\n");
+		while(t){
 		n=0;
 		if(problem->getright() != NULL){
 			if(!problem->getright()->isbalanced()){
@@ -107,7 +119,9 @@ void ATree<T>::balance(){
 	}
 	else{
 		temp=problem->getright();
-	}	
+	}
+	rh=0;
+	lh=0;	
 	if(temp->getright() != NULL){
 		rh=temp->getright()->height();
 	}
@@ -152,22 +166,104 @@ void ATree<T>::balance(){
 	}
 
 	if(father==NULL){
+		switch(dd2+dd1){
+			case 0:{
+				problem=this->rotl(problem);
+				break;
+			}
+			case 1:{
+				problem=this->rotlr(problem);
+				break;
+			}
+			case 2:{
+				problem=this->rotrl(problem);
+				break;
+			}
+			case 3:{
+				problem=this->rotr(problem);
+				break;
+			}
+		}
 		ATree<T>::root=problem;
+	}
 	}
 
 }
 
 template < class T >
-bool ATree<T>::deletenode(T* node){
+void ATree<T>::deletenode(T* node){
 	node=NULL;
-	return wasdeleted;
+}
+
+template < class T>
+bool ATree<T>::deletedata(T data){
+	T dati;
+	Node<T>* notetd;
+	Node<T>* temp;
+	if(data==this->root->getdata()){
+		printf("Eliminando raíz...\n");
+		this->setroot(this->rotl(this->root));
+		this->root->setleft(NULL);
+		this->balance();
+	}
+	else{
+		notetd=findnode(data);
+		if(notetd!=NULL){
+			printf("Nodo encontrado.\n");
+			if(notetd->getright()== NULL && notetd->getleft()==NULL){
+				printf("Que no tenga hijos facilita las cosas...\n");
+				notetd=NULL;
+				return true;
+			}
+			else{
+				if(notetd->getright()== NULL && notetd->getleft()!=NULL){
+					printf("Sólo tiene hijos mayores.\n");
+					notetd=notetd->getleft();
+					return true;
+				}
+				if(notetd->getleft()== NULL && notetd->getright()!=NULL){
+					printf("Sólo tiene hijos menores.\n");
+					notetd=notetd->getright();
+					return true;
+				}
+			}
+			bool t=true;
+			temp=notetd;
+			printf("Buscando nodo de reemplazo...\n");
+			while(temp->getright()==NULL || temp->getleft()==NULL){
+				if(t){
+					temp=temp->getleft();
+					t=false;
+				}
+				else{
+					temp=temp->getright();
+					t=true;
+				}
+			}
+			notetd->setdata(temp->getdata());
+			temp=NULL;
+			return true;
+		}
+		else{
+			printf("El nodo no se encuentra. \n");
+		}
+	}
+	return false;
 }
 
 //Búsqueda.
 template < class T >
 Node<T>* ATree<T>::findnode(T val){
 	Node<T>* founded=NULL;
-	founded = this->root->findson(val);
+	if(this->root->getdata()==val){
+		return this->root;
+	}
+	else{
+		founded = this->root->findson(val);
+	}
+	if(founded==NULL){
+		return NULL;
+	}
 	return founded;
 }
 
@@ -210,6 +306,13 @@ void ATree<T>::inorder(){
 	printf("%s\n","INORDER");
 	this->root->inorder();
 }
+
+/*template < class T >
+list<T> ATree<T>::listinorder(){
+	list<T> datas;
+	this->root->listinorder(datas);
+	return datas;
+}*/
 
 //Rotaciones
 template < class T >

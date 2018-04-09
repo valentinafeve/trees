@@ -2,6 +2,7 @@
 #define __ATREE__H__
 
 #include "Node.h"
+#include <list>
 
 template < class T >
 class ATree{
@@ -18,7 +19,8 @@ public:
 	//Modificadores del árbol.
 	bool insertnode(T& father, T& node);
 	bool insertdata(T data);
-	bool deletenode(T& node);
+	void deletenode(T* node);
+	bool deletedata(T data);
 	//Búsqueda.
 	Node<T>* findnode(T val);
 	//Información del árbol.
@@ -31,6 +33,7 @@ public:
 	void preorder();
 	void posorder();
 	void inorder();
+	//list<T> listinorder();
 	//Rotations
 	Node<T>* rotr(Node<T>* x);
 	Node<T>* rotl(Node<T>* x);

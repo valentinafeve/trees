@@ -1,4 +1,5 @@
 #include <queue>
+
 #include <iostream>
 #include <math.h>
 
@@ -16,7 +17,8 @@ Node<T>::Node(const T& val){
 	
 template< class T >
 Node<T>::~Node(){
-	
+	this->left=NULL;
+	this->right=NULL;
 }
 
 template< class T >
@@ -36,7 +38,12 @@ Node<T>* Node<T>::getleft(){
 
 template< class T >
 void Node<T>::setleft(Node<T>* nleft){
-	Node<T>::left= nleft;
+	if(nleft==NULL){
+		Node<T>::left= NULL;
+	}
+	else{
+		Node<T>::left= nleft;
+	}
 }
 
 template< class T >
@@ -85,11 +92,11 @@ Node<T>* Node<T>::findson(T data){
 	Node<T>* p=NULL;
 	p=this->getright();
 	if(p!= NULL){
-		if(p->getdata()==data){
-			return p;
+		if(p->getdata() == data){
+			return this->getright();
 		}
 		else{
-			p=this->getright()->findson(data);
+			p=this->getright()->findson(data);	
 			if(p!=NULL){
 				return p;
 			}
@@ -107,7 +114,7 @@ Node<T>* Node<T>::findson(T data){
 			}
 		}	
 	}
-	return p;
+	return NULL;
 }
 
 template< class T >
@@ -116,25 +123,34 @@ bool Node<T>::insertdata(T ndata){
 		if(this->getleft() == NULL ){
 			Node<T>* nnode = new Node<T>(ndata);
 			this->setleft(nnode);
+			return 1;
 		}
 		else{
 			this->getleft()->insertdata(ndata);
+			return 1;
 		}
 	}
-	if( ndata > this->getdata() ){
-		if(this->getright() == NULL ){
-			Node<T>* nnode = new Node<T>(ndata);
-			this->setright(nnode);
+	else{
+		if( ndata > this->getdata() ){
+			if(this->getright() == NULL ){
+				Node<T>* nnode = new Node<T>(ndata);
+				this->setright(nnode);
+				return 1;
+			}
+			else{
+				this->getright()->insertdata(ndata);
+				return 1;
+			}
 		}
 		else{
-			this->getright()->insertdata(ndata);
+			if( ndata == this->getdata() ){
+				return 0;
+			}	
 		}
-	}
-	if( ndata == this->getdata() ){
-		return 0;
 	}
 	return 1;
 }
+
 
 template< class T >
 bool Node<T>::isbalanced(){
@@ -185,3 +201,14 @@ void Node<T>::inorder(){
 		Node<T>::right->inorder();
 	}
 }
+
+/*template< class T >
+void Node<T>::listinorder(list<T> datas){
+	if(Node<T>::left != NULL){
+		Node<T>::left->inorder();
+	}
+	printf("%d\n",this->data);
+	if(Node<T>::right != NULL ){
+		Node<T>::right->inorder();
+	}
+}*/
